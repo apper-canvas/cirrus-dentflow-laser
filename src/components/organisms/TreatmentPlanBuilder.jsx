@@ -10,7 +10,7 @@ import ProcedurePlanItem from "@/components/molecules/ProcedurePlanItem";
 import CostEstimator from "@/components/molecules/CostEstimator";
 import { treatmentPlanService } from "@/services/api/treatmentPlanService";
 import { patientService } from "@/services/api/patientService";
-import treatmentsData from "@/services/mockData/treatments.json";
+import { treatmentService } from "@/services/api/treatmentService";
 
 const TreatmentPlanBuilder = ({ onClose, planId = null }) => {
   const [planName, setPlanName] = useState("");
@@ -26,7 +26,7 @@ const TreatmentPlanBuilder = ({ onClose, planId = null }) => {
     procedureCount: 0
   });
 
-  const availableProcedures = treatmentsData.procedureLibrary || [];
+const [availableProcedures, setAvailableProcedures] = useState([]);
 
   useEffect(() => {
     loadPatients();
@@ -39,7 +39,7 @@ const TreatmentPlanBuilder = ({ onClose, planId = null }) => {
     calculateTotals();
   }, [plannedProcedures]);
 
-  const loadPatients = async () => {
+const loadPatients = async () => {
     try {
       const patientsData = await patientService.getAll();
       setPatients(patientsData);
@@ -48,6 +48,19 @@ const TreatmentPlanBuilder = ({ onClose, planId = null }) => {
     }
   };
 
+  const loadProcedureLibrary = async () => {
+    try {
+      const procedures = await treatmentService.getProcedureLibrary();
+      setAvailableProcedures(procedures);
+    } catch (error) {
+      toast.error("Failed to load procedure library");
+    }
+  };
+
+  useEffect(() => {
+    loadPatients();
+    loadProcedureLibrary();
+  }, []);
   const loadExistingPlan = async () => {
     try {
       setIsLoading(true);
