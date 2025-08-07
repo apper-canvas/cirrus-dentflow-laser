@@ -85,13 +85,13 @@ export const treatmentPlanService = {
         patientPortion: plan.patient_portion_c,
         procedures: [] // Note: procedures would be fetched separately if needed
       };
-    } catch (error) {
+} catch (error) {
       if (error?.response?.data?.message) {
         console.error(`Error fetching treatment plan with ID ${id}:`, error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw new Error("Treatment plan not found");
+      return null;
     }
   },
 
@@ -192,13 +192,13 @@ export const treatmentPlanService = {
           };
         }
       }
-    } catch (error) {
+} catch (error) {
       if (error?.response?.data?.message) {
         console.error("Error creating treatment plan:", error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw error;
+      return null;
     }
   },
 
@@ -255,12 +255,12 @@ export const treatmentPlanService = {
         }
       }
     } catch (error) {
-      if (error?.response?.data?.message) {
+if (error?.response?.data?.message) {
         console.error("Error updating treatment plan:", error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw error;
+      return null;
     }
   },
 
@@ -289,15 +289,14 @@ export const treatmentPlanService = {
 
         return response.results.some(result => result.success);
       }
-      
-      return true;
+return true;
     } catch (error) {
       if (error?.response?.data?.message) {
         console.error("Error deleting treatment plan:", error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw error;
+      return false;
     }
   },
 

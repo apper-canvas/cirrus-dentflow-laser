@@ -105,12 +105,12 @@ export const patientService = {
         nextAppointment: patient.next_appointment_c
       };
     } catch (error) {
-      if (error?.response?.data?.message) {
+if (error?.response?.data?.message) {
         console.error(`Error fetching patient with ID ${id}:`, error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw new Error("Patient not found");
+      return null;
     }
   },
 
@@ -177,12 +177,12 @@ export const patientService = {
         }
       }
     } catch (error) {
-      if (error?.response?.data?.message) {
+if (error?.response?.data?.message) {
         console.error("Error creating patient:", error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw error;
+      return null;
     }
   },
 
@@ -254,14 +254,14 @@ export const patientService = {
             nextAppointment: patient.next_appointment_c
           };
         }
-      }
+}
     } catch (error) {
       if (error?.response?.data?.message) {
         console.error("Error updating patient:", error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw error;
+      return null;
     }
   },
 
@@ -287,8 +287,7 @@ export const patientService = {
             if (record.message) throw new Error(record.message);
           });
         }
-
-        return response.results.some(result => result.success);
+return response.results.some(result => result.success);
       }
       
       return true;
@@ -298,7 +297,7 @@ export const patientService = {
       } else {
         console.error(error.message);
       }
-      throw error;
+      return false;
     }
   },
 

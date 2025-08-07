@@ -98,13 +98,13 @@ export const treatmentService = {
         notes: treatment.notes_c,
         status: treatment.status_c
       };
-    } catch (error) {
+} catch (error) {
       if (error?.response?.data?.message) {
         console.error(`Error fetching treatment with ID ${id}:`, error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw new Error("Treatment not found");
+      return null;
     }
   },
 
@@ -217,13 +217,13 @@ export const treatmentService = {
           };
         }
       }
-    } catch (error) {
+} catch (error) {
       if (error?.response?.data?.message) {
         console.error("Error creating treatment:", error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw error;
+      return null;
     }
   },
 
@@ -288,13 +288,13 @@ export const treatmentService = {
           };
         }
       }
-    } catch (error) {
+} catch (error) {
       if (error?.response?.data?.message) {
         console.error("Error updating treatment:", error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw error;
+      return null;
     }
   },
 
@@ -321,7 +321,7 @@ export const treatmentService = {
           });
         }
 
-        return response.results.some(result => result.success);
+return response.results.some(result => result.success);
       }
       
       return true;
@@ -331,7 +331,7 @@ export const treatmentService = {
       } else {
         console.error(error.message);
       }
-      throw error;
+      return false;
     }
   },
 

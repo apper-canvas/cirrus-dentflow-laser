@@ -93,13 +93,13 @@ export const appointmentService = {
         room: appointment.room_c,
         notes: appointment.notes_c
       };
-    } catch (error) {
+} catch (error) {
       if (error?.response?.data?.message) {
         console.error(`Error fetching appointment with ID ${id}:`, error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw new Error("Appointment not found");
+      return null;
     }
   },
 
@@ -260,14 +260,14 @@ export const appointmentService = {
             notes: appointment.notes_c
           };
         }
-      }
+}
     } catch (error) {
       if (error?.response?.data?.message) {
         console.error("Error creating appointment:", error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw error;
+      return null;
     }
   },
 
@@ -329,14 +329,14 @@ export const appointmentService = {
             notes: appointment.notes_c
           };
         }
-      }
+}
     } catch (error) {
       if (error?.response?.data?.message) {
         console.error("Error updating appointment:", error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw error;
+      return null;
     }
   },
 
@@ -370,14 +370,14 @@ export const appointmentService = {
         return response.results.some(result => result.success);
       }
       
-      return true;
+return true;
     } catch (error) {
       if (error?.response?.data?.message) {
         console.error("Error deleting appointment:", error?.response?.data?.message);
       } else {
         console.error(error.message);
       }
-      throw error;
+      return false;
     }
   }
 };
