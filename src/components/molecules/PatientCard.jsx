@@ -32,7 +32,7 @@ const PatientCard = ({
     return age;
   };
 
-  const hasUpcomingAppointment = patient.nextAppointment && new Date(patient.nextAppointment) > new Date();
+const hasUpcomingAppointment = (patient.nextAppointment || patient.next_appointment_c) && new Date(patient.nextAppointment || patient.next_appointment_c) > new Date();
 
   return (
     <Card 
@@ -42,18 +42,18 @@ const PatientCard = ({
       {...props}
     >
       <div className="flex items-start space-x-4">
-        <div className="w-12 h-12 bg-gradient-to-br from-primary to-blue-600 rounded-full flex items-center justify-center text-white font-semibold shadow-lg">
-          {getInitials(patient.firstName, patient.lastName)}
+<div className="w-12 h-12 bg-gradient-to-br from-primary to-blue-600 rounded-full flex items-center justify-center text-white font-semibold shadow-lg">
+          {getInitials(patient.firstName || patient.first_name_c, patient.lastName || patient.last_name_c)}
         </div>
         
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 truncate">
-                {patient.firstName} {patient.lastName}
+<h3 className="text-lg font-semibold text-gray-900 truncate">
+                {patient.firstName || patient.first_name_c} {patient.lastName || patient.last_name_c}
               </h3>
-              <p className="text-sm text-gray-500">
-                Age {getAge(patient.dateOfBirth)} • ID: {patient.Id}
+<p className="text-sm text-gray-500">
+                Age {getAge(patient.dateOfBirth || patient.date_of_birth_c)} • ID: {patient.Id}
               </p>
             </div>
             
@@ -67,35 +67,35 @@ const PatientCard = ({
           
           <div className="mt-4 space-y-2">
             <div className="flex items-center text-sm text-gray-600">
-              <ApperIcon name="Phone" className="w-4 h-4 mr-2 text-gray-400" />
-              {patient.phone}
+<ApperIcon name="Phone" className="w-4 h-4 mr-2 text-gray-400" />
+              {patient.phone || patient.phone_c}
             </div>
             
             <div className="flex items-center text-sm text-gray-600">
-              <ApperIcon name="Mail" className="w-4 h-4 mr-2 text-gray-400" />
-              {patient.email}
+<ApperIcon name="Mail" className="w-4 h-4 mr-2 text-gray-400" />
+              {patient.email || patient.email_c}
             </div>
             
             <div className="flex items-center text-sm text-gray-600">
-              <ApperIcon name="Shield" className="w-4 h-4 mr-2 text-gray-400" />
-              {patient.insuranceProvider}
+<ApperIcon name="Shield" className="w-4 h-4 mr-2 text-gray-400" />
+              {patient.insuranceProvider || patient.insurance_provider_c}
             </div>
           </div>
           
-          {patient.allergies.length > 0 && (
+{(patient.allergies || patient.allergies_c || []).length > 0 && (
             <div className="mt-3">
               <div className="flex items-center text-sm text-warning">
                 <ApperIcon name="AlertTriangle" className="w-4 h-4 mr-1" />
                 <span className="font-medium">Allergies:</span>
-                <span className="ml-1">{patient.allergies.join(", ")}</span>
+<span className="ml-1">{(patient.allergies || patient.allergies_c || []).join(", ")}</span>
               </div>
             </div>
           )}
           
           <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between text-xs text-gray-500">
-            <span>Last Visit: {formatDate(patient.lastVisit)}</span>
+<span>Last Visit: {formatDate(patient.lastVisit || patient.last_visit_c)}</span>
             {hasUpcomingAppointment && (
-              <span>Next: {formatDate(patient.nextAppointment)}</span>
+<span>Next: {formatDate(patient.nextAppointment || patient.next_appointment_c)}</span>
             )}
           </div>
         </div>

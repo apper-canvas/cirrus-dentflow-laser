@@ -186,9 +186,9 @@ const AppointmentScheduleModal = ({ isOpen, onClose, onAppointmentCreated }) => 
                 onChange={(value) => handleInputChange('patientId', value)}
                 placeholder="Select a patient"
               >
-                {patients.map(patient => (
+{patients.map(patient => (
                   <option key={patient.Id} value={patient.Id.toString()}>
-                    {patient.firstName} {patient.lastName} - {patient.phone}
+                    {patient.firstName || patient.first_name_c} {patient.lastName || patient.last_name_c} - {patient.phone || patient.phone_c}
                   </option>
                 ))}
               </Select>
